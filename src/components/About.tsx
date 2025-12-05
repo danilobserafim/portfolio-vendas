@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section id="sobre" className="max-w-5xl mx-auto py-20 px-4 ">
+    <section id="sobre" className="max-w-3xl mx-auto py-20 px-4  ">
       <motion.h3
         className="text-2xl font-bold mb-6"
         initial={{ opacity: 0, y: 10 }}
@@ -11,7 +11,7 @@ export default function About() {
         Sobre mim
       </motion.h3>
       <motion.p
-        className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-3xl m-auto"
+        className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg  m-auto"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
       >
