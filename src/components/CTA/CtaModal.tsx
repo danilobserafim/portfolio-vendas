@@ -38,13 +38,16 @@ export function CtaModal({
     e?.preventDefault();
 
     try {
-      const response: any = await fetch(import.meta.env.VITE_API_BASEURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
+      const response: any = await fetch(
+        import.meta.env.VITE_API_BASEURL + "/budgets",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
         .then((response) => response.json())
         .then((data) => data);
       console.log(response);
