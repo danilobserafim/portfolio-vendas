@@ -1,7 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Spinner from "../Spinner";
+import { Toast } from "../Toast";
 
 const schema = z.object({
   nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres").max(100),
@@ -23,6 +26,33 @@ export function CtaModal({
   onClose: () => void;
 }) {
   if (!isOpen) return null;
+  const handleKeyDown = useCallback((e: any) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  }, []);
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [ToastData, setToastData] = useState<{
+    message: string;
+    type: "success" | "error";
+    isOpen: boolean;
+    onClose: () => void;
+    duration: number;
+    title?: string;
+  }>({
+    title: "",
+    message: "",
+    type: "success",
+    duration: 3000,
+    isOpen: false,
+    onClose: () => setToastData({ ...ToastData, isOpen: false }),
+  });
 
   const {
     register,
@@ -33,29 +63,47 @@ export function CtaModal({
     resolver: zodResolver(schema),
   });
 
+  const showToast = (type: "success" | "error") => {
+    type == "success"
+      ? setToastData({
+          ...ToastData,
+          isOpen: true,
+          message: "Orçamento enviado com sucesso!",
+          type: "success",
+          title: "Tudo certo!",
+        })
+      : setToastData({
+          ...ToastData,
+          title: "Algo deu errado",
+          isOpen: true,
+          message: " tente novamente!",
+          type: "error",
+        });
+  };
+
   // Envio do formulário
   const onSubmit = async (data: FormData, e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
+    setIsLoading(true);
 
     try {
-      const response: any = await fetch(
-        import.meta.env.VITE_API_BASEURL + "/budgets",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      await fetch(import.meta.env.VITE_API_BASEURL + "/budgets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((response) => response.json())
         .then((data) => data);
-      console.log(response);
+      showToast("success");
 
+      setIsLoading(false);
       reset();
-      onClose();
     } catch (err) {
       console.error("Erro ao enviar:", err);
+      setIsLoading(false);
+      showToast("error");
     }
   };
 
@@ -142,10 +190,11 @@ export function CtaModal({
           </div>
 
           <button
+            disabled={isLoading}
             type="submit"
-            className="w-full py-3 bg-linear-to-bl from-blue-500 to-indigo-600 text-white rounded-md font-medium hover:from-indigo-600 hover:to-blue-500 hover:bg-linear-to-tl transition cursor-pointer"
+            className="disabled:from-blue-800 disabled:to-indigo-900 w-full py-3 bg-linear-to-bl from-blue-500 to-indigo-600 text-white rounded-md font-medium hover:from-indigo-600 hover:to-blue-500 hover:bg-linear-to-tl transition cursor-pointer"
           >
-            Enviar pedido
+            {!isLoading ? "Enviar pedido" : <Spinner />}
           </button>
         </form>
 
@@ -156,6 +205,14 @@ export function CtaModal({
           ✕
         </button>
       </motion.div>
+      <Toast
+        isOpen={ToastData.isOpen}
+        message={ToastData.message}
+        onClose={() => ToastData.onClose()}
+        type={ToastData.type}
+        duration={ToastData.duration}
+        title={ToastData.title}
+      />
     </div>
   );
 }

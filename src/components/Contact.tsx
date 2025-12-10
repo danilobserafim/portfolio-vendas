@@ -4,7 +4,7 @@ export default function Contact() {
   return (
     <section
       id="contato"
-      className="bg-gray-900 dark:bg-gray-800 text-gray-100 py-20 px-4 text-center"
+      className=" dark:bg-gray-800 dark:text-gray-100 py-20 px-4 text-center bg-gray-100"
     >
       <motion.h3
         className="text-2xl font-bold mb-6"
@@ -14,7 +14,7 @@ export default function Contact() {
         Contato
       </motion.h3>
       <motion.p
-        className="text-gray-300 mb-4"
+        className="dark:text-gray-300 mb-4"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
       >
