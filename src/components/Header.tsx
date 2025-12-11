@@ -10,9 +10,9 @@ export default function Header() {
         <a href="#planos" className="hover:text-blue-500 transition">
           Planos
         </a>
-        <a href="#projetos" className="hover:text-blue-500 transition">
+        {/* <a href="#projetos" className="hover:text-blue-500 transition">
           Projetos
-        </a>
+        </a> */}
         <a href="#contato" className="hover:text-blue-500 transition">
           Contato
         </a>
