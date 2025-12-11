@@ -15,15 +15,17 @@ export default function Services() {
           {[
             {
               title: "Landing Pages Profissionais",
-              desc: "Páginas de alta conversão, rápidas, modernas e otimizadas para captura de leads ou vendas.",
+              desc: `Páginas modernas, rápidas e feitas para converter. 
+              Foco total em leads, vendas e resultados.`,
             },
             {
               title: "APIs e Backends",
-              desc: "APIs robustas, seguras e escaláveis com Node.js, NestJS, Prisma, PostgreSQL e MongoDB.",
+              desc: "APIs robustas, seguras e preparadas para escalar. Arquitetura estável para integrações rápidas e operações confiáveis.",
             },
             {
               title: "Dashboards e Sistemas",
-              desc: "Sistemas completos com autenticação, relatórios, gráficos e automações.",
+              desc: `Sistemas completos com autenticação, relatórios e automações.
+              Performance, controle e eficiência para o seu negócio.`,
             },
           ].map((s, i) => (
             <motion.div
