@@ -9,7 +9,7 @@ import { Toast } from "../Toast";
 const schema = z.object({
   nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres").max(100),
   email: z.string().email("E-mail inválido"),
-  tipoProjeto: z.string().min(1, "Selecione um tipo de projeto"),
+  typeId: z.string().min(1, "Selecione um tipo de projeto"),
   descricao: z
     .string()
     .min(10, "A descrição deve ter pelo menos 10 caracteres")
@@ -31,6 +31,12 @@ export function CtaModal({
       onClose();
     }
   }, []);
+
+  const [budgetTypes, setBudgetTypes] = useState([]);
+  useEffect(() => {
+    getProjectTypes();
+  }, []);
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -95,11 +101,15 @@ export function CtaModal({
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then((data) => data);
-      showToast("success");
+        .then((data) => {
+          data.nome &&
+            (() => {
+              showToast("success");
+              reset();
+            })();
+        });
 
       setIsLoading(false);
-      reset();
     } catch (err) {
       console.error("Erro ao enviar:", err);
       setIsLoading(false);
@@ -157,20 +167,21 @@ export function CtaModal({
           <div>
             <label className="block mb-1 font-medium">Tipo de projeto</label>
             <select
-              {...register("tipoProjeto")}
+              {...register("typeId")}
               className="w-full p-3 rounded-md bg-gray-100 dark:bg-gray-800 outline-none"
             >
               <option value="">Selecione...</option>
-              <option value="Landing Page">Landing Page</option>
-              <option value="Website completo">Website completo</option>
-              <option value="Aplicação Web">Aplicação Web</option>
-              <option value="API Backend">API Backend</option>
-              <option value="Dashboard / Painel">Dashboard / Painel</option>
-              <option value="SaaS completo">SaaS completo</option>
+              {budgetTypes?.map((type: any) => {
+                return (
+                  <option key={type.id} value={type.id}>
+                    {type.value}
+                  </option>
+                );
+              })}
             </select>
-            {errors.tipoProjeto && (
+            {errors.typeId && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.tipoProjeto.message}
+                {errors.typeId.message}
               </p>
             )}
           </div>
@@ -215,4 +226,9 @@ export function CtaModal({
       />
     </div>
   );
+  async function getProjectTypes() {
+    await fetch(`${import.meta.env.VITE_API_BASEURL}/budget-types`)
+      .then((res) => res.json())
+      .then((data) => setBudgetTypes(data));
+  }
 }
