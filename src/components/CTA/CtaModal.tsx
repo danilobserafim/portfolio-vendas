@@ -166,7 +166,7 @@ export function CtaModal({
 
           <div>
             <label className="block mb-1 font-medium">Tipo de projeto</label>
-            <select
+            <select 
               {...register("typeId")}
               className="w-full p-3 rounded-md bg-gray-100 dark:bg-gray-800 outline-none"
             >
@@ -174,7 +174,10 @@ export function CtaModal({
               {budgetTypes?.map((type: any) => {
                 return (
                   <option key={type.id} value={type.id}>
+                    <p title="okok">
+
                     {type.value}
+                    </p>
                   </option>
                 );
               })}
