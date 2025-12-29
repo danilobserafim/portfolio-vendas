@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
@@ -10,13 +10,15 @@ export default function Hero() {
       >
         <h2 className="text-5xl font-bold mb-4">Desenvolvedor Full Stack</h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-          Transformo ideias em produtos reais <br /> construindo aplicações
-          modernas, rápidas e orientadas à escala.
+          Transformo ideias em produtos reais
+          <br />
+          construindo aplicações modernas, rápidas e orientadas à escala.
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <a
             href="#servicos"
-            className="px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+            className="px-6 py-3 bg-linear-to-l from-blue-500 to-indigo-600  text-white rounded-md font-medium
+                        hover:bg-linear-to-bl "
           >
             Ver serviços
           </a>

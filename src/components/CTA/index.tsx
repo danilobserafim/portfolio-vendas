@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { CtaModal } from "./CtaModal";
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { CtaModal } from './CtaModal';
 
 export default function CTA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +16,9 @@ export default function CTA() {
           Pronto para começar?
         </motion.h3>
         <p className="mb-6">
-          Solicite um orçamento — respondo em até 24h com uma proposta
-          detalhada.
+          <b>Solicite um orçamento</b>
+          <br />
+          respondo em até 24h com uma proposta detalhada.
         </p>
         <button
           className="inline-block px-6 py-3 bg-white text-blue-600 rounded-md  cursor-pointer font-light hover:font-bold transition-all "
